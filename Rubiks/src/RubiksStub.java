@@ -24,7 +24,7 @@ public class RubiksStub {
 		
 		
 		for (int counter = 0; counter < cubeInput1d.length; counter++) {
-			
+			// get the input for the squares of each face on the cube
 			validInput = false;
 			
 			if ((counter == 0)) {
@@ -80,6 +80,7 @@ public class RubiksStub {
 		}
 	
         Cube._colours [][] cubeInput2d = oneToTwo(cubeInput1d);
+        // convert that 1-d input array into a 2-d one that can be worked with
 		Cube rubiksCube = new Cube(cubeInput2d);
 		// instantiate the cube object
 		
