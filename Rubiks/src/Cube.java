@@ -153,8 +153,8 @@ public class Cube {
 		_colours [][] temp = new _colours [6][4];
 		
 		for (int counter = 0; counter < 6; counter++) {
-			// clones the original 2d array so that the colours can be
-			// swapped without changing the cube that you're swapping from
+		        // clones the original 2d array so that the colours can be
+		        // swapped without changing the cube that you're swapping from
 			
 			temp[counter] = this._cube[counter].clone();
 			
@@ -188,7 +188,7 @@ public class Cube {
 		}
         for (int counter = 0; counter < 4; counter++) {
         	// rotate the colours on the face being turned
-			this._cube[2][(counter+1) % 4] = temp[2][counter];
+		this._cube[2][(counter+1) % 4] = temp[2][counter];
 			
 		}
 		this._cube[0][0] = temp[5][0];
@@ -225,7 +225,7 @@ public class Cube {
 	
         for (int counter = 0; counter < 4; counter++) {
         	// rotate the colours on the face being turned
-			this._cube[4][(counter+1) % 4] = temp[4][counter];
+		this._cube[4][(counter+1) % 4] = temp[4][counter];
 			
 		}
     }
