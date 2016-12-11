@@ -22,7 +22,6 @@ public class RubiksStub {
 		System.out.println("Enter the configuration of the cube: ");
 		Cube._colours [] cubeInput1d = new Cube._colours[24];
 		
-		
 		for (int counter = 0; counter < cubeInput1d.length; counter++) {
 			// get the input for the squares of each face on the cube
 			validInput = false;
