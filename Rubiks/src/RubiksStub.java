@@ -44,20 +44,20 @@ public class RubiksStub {
 				
 			}
 			
-            if (counter == 12) {
-            	System.out.println();
+                        if (counter == 12) {
+            	                System.out.println();
 				System.out.println("Bottom face: ");
 				
 			}
             
-            if (counter == 16) {
-            	System.out.println();
+                        if (counter == 16) {
+            	                System.out.println();
 				System.out.println("Left face: ");
 				
 			}
 			
-            if (counter == 20) {
-            	System.out.println();
+                        if (counter == 20) {
+            	                System.out.println();
 				System.out.println("Right face: ");
 				
 			}
@@ -78,8 +78,8 @@ public class RubiksStub {
 			
 		}
 	
-        Cube._colours [][] cubeInput2d = oneToTwo(cubeInput1d);
-        // convert that 1-d input array into a 2-d one that can be worked with
+                Cube._colours [][] cubeInput2d = oneToTwo(cubeInput1d);
+                // convert that 1-d input array into a 2-d one that can be worked with
 		Cube rubiksCube = new Cube(cubeInput2d);
 		// instantiate the cube object
 		
