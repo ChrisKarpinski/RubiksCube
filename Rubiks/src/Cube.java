@@ -10,7 +10,7 @@
 import java.util.ArrayList;
 public class Cube {
 
-	private enum _colours {
+	public enum _colours {
 		// enum for the colours on the faces of the cube
 		B,
 		R,
@@ -22,10 +22,10 @@ public class Cube {
 	}
 	private int _NUMBER_OF_FACES = 6;
 	private int _NUMBER_OF_SQUARE_FACE = 4;
-	private String[][] _cube = new String[this._NUMBER_OF_FACES][this._NUMBER_OF_SQUARE_FACE];
+	private _colours[][] _cube = new _colours[this._NUMBER_OF_FACES][this._NUMBER_OF_SQUARE_FACE];
 	private ArrayList<String> _moves = new ArrayList<String>();
 	
-	public Cube (String [][] cubeInput) {
+	public Cube (_colours [][] cubeInput) {
 		// constructor to initialize cube 
 		this._cube = cubeInput;
 		
@@ -128,7 +128,7 @@ public class Cube {
 	public boolean checkSolved() {
 		// checks if the current cube is solved
 		
-		for (String [] face : this._cube) {
+		for (_colours [] face : this._cube) {
 			// for each face in the cube, if all the colours are not the same as the 
 			// first colour, then it's not solved
 			// otherwise, it is solved.
@@ -150,7 +150,7 @@ public class Cube {
 	
 	public void rotateFront () {
 		// rotates front face clockwise
-		String [][] temp = new String [6][4];
+		_colours [][] temp = new _colours [6][4];
 		
 		for (int counter = 0; counter < 6; counter++) {
 			// clones the original 2d array so that the colours can be
@@ -177,7 +177,7 @@ public class Cube {
 	
     public void rotateTop () {
 		// rotates top face clockwise
-        String [][] temp = new String [6][4];
+    	_colours [][] temp = new _colours [6][4];
 		
 		for (int counter = 0; counter < 6; counter++) {
 			// clones the original 2d array so that the colours can be
@@ -205,7 +205,7 @@ public class Cube {
 	
     public void rotateLeft () {
 	    // rotates the left face of the cube clockwise
-        String [][] temp = new String [6][4];
+    	_colours [][] temp = new _colours [6][4];
 		
 		for (int counter = 0; counter < 6; counter++) {
 			// clones the original 2d array so that the colours can be
