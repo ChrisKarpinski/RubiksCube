@@ -86,8 +86,8 @@ public class Cube {
 					
 				getMoves(currentMove+1, movesToCheck); // move onto the next move (next branch of recursion)
 				
-				// once all of the moves have been generated, collapse the stack and start checking 
-				// each of them
+				// once all of the moves have been generated, the stack collapses and  
+				// each of the moves combinations are checked if they work
 				
 				if (this.checkSolved()) {
 					// if the cube is solved after the last rotation, get out of the method and keep that
