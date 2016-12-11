@@ -1,8 +1,17 @@
+/****************************************************************************
+ *
+ * Created by: Chris Karpinski
+ * Created on: Dec 2016
+ * This class models the cube to be solved and runs all of the necessary 
+ *     logic to solve the cube
+ *
+ ****************************************************************************/
+
 import java.util.ArrayList;
 public class Cube {
 
 	private enum _colours {
-		
+		// enum for the colours on the faces of the cube
 		B,
 		R,
 		W,
@@ -22,114 +31,110 @@ public class Cube {
 		
 	}
 	
-	public String [][] getCube () {
-		
-		return this._cube;
-		
-	}
-	
 	public void solveCube() {
 		// solves the cube recursively
-		
-		ArrayList<String> solution = new ArrayList<String>();
 		
 		for (int counter = 0; counter < 33; counter++) {
 			// up to 33 because 33 is the maximum number of moves that a 2 by 2 rubiks cube 
 			// can be solved in if it is solvable.
 			if (!this.checkSolved()) {
 				
-				solution = this.getMoves(0, counter);
-				// asking - can the cube be solved in each number of moves about up to max number of moves.
+				this.getMoves(0, counter);
+				// asking - can the cube be solved in each number of moves up to max number of moves?
 			}
 			else {
-				break;
+				// once a solution is found for a certain number of moves, stop looking for more solutions
+				// and print out the shortest found solution
+				this.printMoves();
+				return;
 			}
 			
-			
 		}
-		this.printMoves();
+		
 	}
 	
-	public ArrayList<String> getMoves (int count, int iterator) {
+	public void getMoves (int currentMove, int movesToCheck) {
+		// generates the moves needed to solve the cube in a given number of moves
+		// if possible
 		
-		if (count < iterator) {
+		if (currentMove < movesToCheck) {
+			// recursively loop through each move number up to the number of moves 
+			// that are being checked for to work through ordered combinations of moves 
+			// until a working arrangement of moves is found for that number of moves
 			
-			
-			if (this.checkSolved()) {
+			for (int faceIndex = 0; faceIndex < 3; faceIndex++) {
+				// do each of the three possible moves and add their 
+				// instruction to the list of moves
+				if (faceIndex == 0) {
+						
+					this._moves.add("Rotate front");
+					this.rotateFront();
+						
+				}
+				else if (faceIndex == 1) {
+						
+					this._moves.add("Rotate top");
+					this.rotateTop();
+						
+				}
+				else {
+						
+					this._moves.add("Rotate left");
+					this.rotateLeft();
+						
+				}
+					
+				getMoves(currentMove+1, movesToCheck); // move onto the next move (next branch of recursion)
 				
-				return this._moves;
-			
-			}
-			else {
+				// once all of the moves have been generated, collapse the stack and start checking 
+				// each of them
 				
-				for (int counter = 0; counter < 3; counter++) {
-					
-					if (counter == 0) {
-						this._moves.add("Rotate front");
-						this.rotateFront();
+				if (this.checkSolved()) {
+					// if the cube is solved after the last rotation, get out of the method and keep that
+					// solution
+					return;
 						
-					}
-					else if (counter == 1) {
-						this._moves.add("Rotate top");
-						this.rotateTop();
-						
-					}
-					else {
-						this._moves.add("Rotate left");
-						this.rotateLeft();
-					}
-					
-					this._moves = getMoves(count+1,iterator); // move onto the next rotation (next recursive branch)
-					
-					if (this.checkSolved()) {
-						
-						return this._moves;
-						
-					}
-					
-					for (int counter2 = 0; counter2 < 3; counter2++) {
-						// undo the current move by rotating it 3 times
-						if (counter == 0) {
-							
-							this.rotateFront();
-							
-						}
-						else if (counter == 1) {
-							
-							this.rotateTop();
-							
-						}
-						else {
-							this.rotateLeft();
-						}
-						
-					}
-					this._moves.remove(count); // remove the current instruction index
 				}
 				
+				this._moves.remove(currentMove); // remove the current instruction index
 				
+				for (int counter = 0; counter < 3; counter++) {
+					// if the cube is not solved after the last rotation 
+					// (not solved for that given combination of moves)
+					// undo the last move by rotating the current face 3 more times clockwise
+					
+					if (faceIndex == 0) {
+							
+						this.rotateFront();
+							
+					}
+					else if (faceIndex == 1) {
+							
+						this.rotateTop();
+							
+					}
+					else {
+						this.rotateLeft();
+					}
+						
+				}
+					
 			}
-			
-			
+				
 		}
-		return this._moves;
 		
 	}
 	
 	public boolean checkSolved() {
 		// checks if the current cube is solved
-		boolean cubeSolved = false;
 		
 		for (String [] face : this._cube) {
-			
+			// for each face in the cube, if all the colours are not the same as the 
+			// first colour, then it's not solved
+			// otherwise, it is solved.
 			for (int counter = 0; counter < 4; counter++) {
 				
-				if (face[counter] == face[0]) {
-					
-					cubeSolved = true;
-					
-				}
-				else {
+				if (face[counter] != face[0]) {
 					
 					return false;
 					
@@ -139,7 +144,7 @@ public class Cube {
 			
 		}
 		
-		return cubeSolved;
+		return true;
 		
 	}
 	
@@ -148,9 +153,10 @@ public class Cube {
 		String [][] temp = new String [6][4];
 		
 		for (int counter = 0; counter < 6; counter++) {
+			// clones the original 2d array so that the colours can be
+			// swapped without changing the cube that you're swapping from
 			
 			temp[counter] = this._cube[counter].clone();
-			
 			
 		}
 		this._cube[2][1] = temp[4][0];
@@ -163,7 +169,7 @@ public class Cube {
 		this._cube[5][3] = temp[2][2];
 		
 		for (int counter = 0; counter < 4; counter++) {
-			
+			// rotate the colours on the face being turned
 			this._cube[0][(counter+1) % 4] = temp[0][counter];
 			
 		}
@@ -174,13 +180,14 @@ public class Cube {
         String [][] temp = new String [6][4];
 		
 		for (int counter = 0; counter < 6; counter++) {
+			// clones the original 2d array so that the colours can be
+			// swapped without changing the cube that you're swapping from
 			
 			temp[counter] = this._cube[counter].clone();
 			
-			
 		}
         for (int counter = 0; counter < 4; counter++) {
-			
+        	// rotate the colours on the face being turned
 			this._cube[2][(counter+1) % 4] = temp[2][counter];
 			
 		}
@@ -201,9 +208,10 @@ public class Cube {
         String [][] temp = new String [6][4];
 		
 		for (int counter = 0; counter < 6; counter++) {
+			// clones the original 2d array so that the colours can be
+			// swapped without changing the cube that you're swapping from
 			
 			temp[counter] = this._cube[counter].clone();
-			
 			
 		}
 		this._cube[0][3] = temp[2][3];
@@ -216,7 +224,7 @@ public class Cube {
 		this._cube[3][2] = temp[0][2];
 	
         for (int counter = 0; counter < 4; counter++) {
-			
+        	// rotate the colours on the face being turned
 			this._cube[4][(counter+1) % 4] = temp[4][counter];
 			
 		}
@@ -231,7 +239,12 @@ public class Cube {
     	}
     	
     	if (this._moves.size() == 0) {
+    		// if no moves were able to be generated (ie the cube could not
+    		// be solved), say that the cube doesnt have a solution
     		System.out.println("This cube is not solvable");
+    	}
+    	else {
+    		System.out.println("Solved");
     	}
     	
     }
