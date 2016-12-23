@@ -70,6 +70,7 @@ public class Cube {
 			// to solve (maximum for several tests has been around 3 minutes), 
 			// so I would assume that all (or at least the vast majority) cubes can be 
 			// solved in less than 10 minutes if they're solvable at all.
+			
 			return;
 			
 		}
