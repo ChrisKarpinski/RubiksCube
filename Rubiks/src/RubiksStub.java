@@ -44,20 +44,20 @@ public class RubiksStub {
 				
 			}
 			
-            if (counter == 12) {
-            	System.out.println();
+                        if (counter == 12) {
+            	                System.out.println();
 				System.out.println("Bottom face: ");
 				
 			}
             
-            if (counter == 16) {
-            	System.out.println();
+                        if (counter == 16) {
+            	                System.out.println();
 				System.out.println("Left face: ");
 				
 			}
 			
-            if (counter == 20) {
-            	System.out.println();
+                        if (counter == 20) {
+            	                System.out.println();
 				System.out.println("Right face: ");
 				
 			}
