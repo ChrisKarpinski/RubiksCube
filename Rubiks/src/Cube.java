@@ -20,10 +20,10 @@ public class Cube {
 		G
 		
 	}
-	private int _NUMBER_OF_FACES = 6;
-	private int _NUMBER_OF_SQUARE_FACE = 4;
-	private _colours[][] _cube = new _colours[this._NUMBER_OF_FACES][this._NUMBER_OF_SQUARE_FACE];
+	private _colours[][] _cube = new _colours[6][4];
 	private ArrayList<String> _moves = new ArrayList<String>();
+	private long _startTime = System.currentTimeMillis();
+	private long _runTime = 0;
 	
 	public Cube (_colours [][] cubeInput) {
 		// constructor to initialize cube 
@@ -34,17 +34,23 @@ public class Cube {
 	public void solveCube() {
 		// solves the cube recursively
 		
-		for (int counter = 0; counter < 33; counter++) {
-			// up to 33 because 33 is the maximum number of moves that a 2 by 2 rubiks cube 
-			// can be solved in if it is solvable.
-			if (!this.checkSolved()) {
+		for (int counter = 0;; counter++) {
+			// we don't need a limit on the counter because the limit is taken care
+			// of by the run time constraint for non-solvability
+			if (!this.checkSolved() && this._runTime < 600000) {
 				
 				this.getMoves(0, counter);
-				// asking - can the cube be solved in each number of moves up to max number of moves?
+				// asking - can the cube be solved in each number of moves until the time limit
+				// for a solution is reached?
 			}
 			else {
 				// once a solution is found for a certain number of moves, stop looking for more solutions
 				// and print out the shortest found solution
+				if (this._runTime > 600000) {
+					// clear out any generated moves if the time limit of 10 minutes has been reached
+					// (because the cube was probably not solvable) 
+					this._moves.clear();
+				}
 				this.printMoves();
 				return;
 			}
@@ -52,11 +58,23 @@ public class Cube {
 		}
 		
 	}
-	
+
 	public void getMoves (int currentMove, int movesToCheck) {
+		long currentTime = System.currentTimeMillis();
+		this._runTime = currentTime - this._startTime;
+		
+		if (this._runTime > 600000) {
+			// if the program is looking for solutions for more than 10 minutes 
+			// (600000 milliseconds), there probably is no solution.
+			// I have not been able to find a cube that takes more than 10 minutes
+			// to solve (maximum for several tests has been around 3 minutes), 
+			// so I would assume that all (or at least the vast majority) cubes can be 
+			// solved in less than 10 minutes if they're solvable at all.
+			return;
+			
+		}
 		// generates the moves needed to solve the cube in a given number of moves
 		// if possible
-		
 		if (currentMove < movesToCheck) {
 			// recursively loop through each move number up to the number of moves 
 			// that are being checked for to work through ordered combinations of moves 
@@ -232,6 +250,7 @@ public class Cube {
     
     public void printMoves () {
     	// prints out all the moves to solve the cube
+    	
     	for (int counter = 0; counter < this._moves.size(); counter++) {
     		
     		System.out.println(this._moves.get(counter));

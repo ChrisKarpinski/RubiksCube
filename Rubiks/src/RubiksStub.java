@@ -69,7 +69,7 @@ public class RubiksStub {
 					validInput = true;
 					
 				} catch (IllegalArgumentException e) {
-					
+					// checks to see if the the input is in the enum of colours
 					System.err.println("Invalid input - please re-enter");
 					validInput = false;
 				} 
